@@ -1,0 +1,97 @@
+
+.piano{
+  height: 150px;
+  background-color: #fff;
+  border-radius: none;
+  border-style: none;
+  border-left: 1px solid rgb(161, 161, 161);
+  border-bottom: 1px solid rgb(161, 161, 161);
+  border-top: 1px solid rgb(161, 161, 161); 
+  width: 100%;
+  position: relative;
+  border-radius: 0 0 5px 5px;
+  box-shadow: 1px 5px 3px #ddd;
+  cursor: pointer;
+}
+.piano.active{
+  box-shadow: 1px 0px 3px #ddd;
+  transform: translateY(2%);
+  background-color: rgb(206, 206, 206);
+}
+.piano p{
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  padding-bottom: 5px;
+  pointer-events: none;
+}
+.piano div{
+  pointer-events: none;
+}
+.piano-plugin-kuroonrails{
+  padding: 10px;
+}
+#NoteButton{
+  font-size: 15px;
+  display: inline-block;
+  width: auto;
+  height: auto;
+  margin-bottom: 15px;
+
+}
+
+.pianos-box{
+  display: flex;
+  max-width: 700px;
+  min-height: 160px;
+  margin: 0 auto;
+  overflow-x: auto;
+
+}
+
+.piano-box{
+  display: flex;
+  text-align: center;
+  position: relative;
+  width: 100%;
+}
+
+.piano-box:last-child .piano{
+  border-right: 1px solid rgb(161, 161, 161);
+}
+.piano-text{
+  width: 100%;
+  font-size: 13px;
+  white-space: nowrap;
+  color: #000;
+}
+
+.piano-text-box.black .piano-text{
+  position: relative;
+  padding-bottom: 0;
+  font-size: 10px;
+  pointer-events: none;
+  color: #fff;
+}
+.piano-text-box.black{
+  position: absolute;
+  bottom: 0;
+}
+.piano.black{
+  position: absolute;
+  width: 80%;
+  left: 20px;
+  z-index: 1;
+  height: 50%;
+  background-color: #000;
+  color: #fff;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  /* display: none; */
+}
+.piano:active{
+  outline: none;
+}

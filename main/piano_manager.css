@@ -1,0 +1,11 @@
+.mark_on_piano{
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: green;
+  position: absolute;
+  bottom: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
