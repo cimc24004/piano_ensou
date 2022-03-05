@@ -6,44 +6,44 @@ window.addEventListener('DOMContentLoaded', function(){
   let key_piano = false;
   let onMouseNow = false;
   let key_for_pianos = {
-    "z" : "C2",
-    "x" : "D2",
-    "c" : "E2",
-    "q" : "F2",
-    "w" : "G2",
-    "e" : "A2",
-    "r" : "B2",
-    "t" : "C3",
-    "y" : "D3",
-    "u" : "E3",
-    "i" : "F3",
-    "o" : "G3",
-    "p" : "A3",
-    "[" : "B3",
-    "]" : "C4",
-    "v" : "D4",
-    "b" : "E4",
-    "n" : "F4",
-    "m" : "G4",
-    "," : "A4",
-    "." : "B4",
+    "z" : "C3",
+    "x" : "D3",
+    "c" : "E3",
+    "q" : "F3",
+    "w" : "G3",
+    "e" : "A3",
+    "r" : "B3",
+    "t" : "C4",
+    "y" : "D4",
+    "u" : "E4",
+    "i" : "F4",
+    "o" : "G4",
+    "p" : "A4",
+    "[" : "B4",
+    "]" : "C5",
+    "v" : "D5",
+    "b" : "E5",
+    "n" : "F5",
+    "m" : "G5",
+    "," : "A5",
+    "." : "B5",
 
 
-    "s" : "C#2",
-    "d" : "D#2",
-    "2" : "F#2",
-    "3" : "G#2",
-    "4" : "A#2",
-    "6" : "C#3",
-    "7" : "D#3",
-    "9" : "F#3",
-    "0" : "G#3",
-    "-" : "A#3",
-    "f" : "C#4",
-    "g" : "D#4",
-    "l" : "A#4",
-    "k" : "G#4",
-    "j" : "F#4"
+    "s" : "C#3",
+    "d" : "D#3",
+    "3" : "F#3",
+    "4" : "G#3",
+    "5" : "A#3",
+    "6" : "C#4",
+    "7" : "D#4",
+    "9" : "F#4",
+    "0" : "G#4",
+    "-" : "A#4",
+    "f" : "C#5",
+    "g" : "D#5",
+    "l" : "A#5",
+    "k" : "G#5",
+    "j" : "F#5"
   }
   let pushed_key_history = [
 
@@ -83,7 +83,6 @@ window.addEventListener('DOMContentLoaded', function(){
     }
 
   });
-  console.log(codeTypes);
   document.addEventListener("keypress", function(event){
     var target = document.getElementById(key_for_pianos[event.key]);
     if(target != null && pushed_key_history[pushed_key_history.length - 1] != event.key){
