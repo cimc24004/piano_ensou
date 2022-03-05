@@ -75,14 +75,17 @@ window.addEventListener('DOMContentLoaded', function(){
       }
     });
   }
-  note_button.addEventListener("click", function(event){
-    if(!hide_mode){
-      piano_texts_control(true);
-    }else{
-      piano_texts_control(false);
-    }
+  if(note_button != null){
+    note_button.addEventListener("click", function(event){
+      if(!hide_mode){
+        piano_texts_control(true);
+      }else{
+        piano_texts_control(false);
+      }
 
-  });
+    });
+  }
+
   document.addEventListener("keypress", function(event){
     var target = document.getElementById(key_for_pianos[event.key]);
     if(target != null && pushed_key_history[pushed_key_history.length - 1] != event.key){
