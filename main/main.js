@@ -55,11 +55,7 @@ window.addEventListener('DOMContentLoaded', function(){
   // }).toMaster();
   console.log("This is created by Kuroonrails");
 
-  let pianos_data_now = {
-    piano_key: "",
-    symbol: "",
-    codeName: ""
-  };
+
   document.getElementsByClassName("piano-plugin-kuroonrails")[0].style.display = "block";
 
   for(let i = 0; i < pianos.length; i++){

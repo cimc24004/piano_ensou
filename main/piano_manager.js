@@ -1,5 +1,4 @@
 let codeTypes = [
-  //三和音
     {'codeName': '(M)',
         'codeKeys': [1,5,8]},
     {'codeName': 'm',
@@ -8,21 +7,26 @@ let codeTypes = [
         'codeKeys': [1,4,7]},
     {'codeName': 'aug',
         'codeKeys': [1,5,9]},
-    {'codeName': 'sus4',
-        'codeKeys': [1,6,8]},
-    //四和音
-    {'codeName': 'M7',
-        'codeKeys': [1,5,8,12]},
     {'codeName': '7',
-        'codeKeys': [1,5,8,11]},	
-    {'codeName': 'mM7',
-        'codeKeys': [1,4,8,12]},
+        'codeKeys': [1,5,8,11]},
     {'codeName': 'm7',
         'codeKeys': [1,4,8,11]},
-    {'codeName': 'm7(-5)',
-        'codeKeys': [1,4,7,11]},
+    {'codeName': 'maj7',
+        'codeKeys': [1,5,8,12]},
     {'codeName': 'dim7',
         'codeKeys': [1,4,7,10]},
+    {'codeName': 'm7(-5)',
+        'codeKeys': [1,4,7,11]},
+    {'codeName': 'sus4',
+        'codeKeys': [1,6,8]},
+    {'codeName': 'M7',
+        'codeKeys': [1,5,8,12]},
+	
+    {'codeName': 'mM7',
+        'codeKeys': [1,4,8,12]},
+
+
+
     {'codeName': 'augM7',
         'codeKeys': [1,5,9,12]},	
     {'codeName': 'aug7',
@@ -37,7 +41,7 @@ let codeTypes = [
     {'codeName': 'm6',
         'codeKeys': [1,4,8,10]},
     {'codeName': "7(#9)",
-        'codeKeys': [1,5,8,11,16]}
+        'codeKeys': [1,5,8,11,16]},
 ];
 
 let elements_by_piano = {
@@ -116,27 +120,96 @@ let chord_root_start_data = {
     "b":"A#2"
   },
 }
-
+let TimeIntervalEvent = null;
+let TimeOutEvent = null;
 let pianos = document.getElementsByClassName("piano");
 let chord_play_button = document.getElementById("ChordsPlayButton");
 
-for(let i = 0; i < pianos.length; i++){
-  let text = document.createElement("p");
-  text.textContent = i;
-  text.style.fontSize = "5px";
-  text.style.position = "absolute";
-  text.style.bottom = "25px";
-  text.style.color = "red";
-  text.style.zIndex = "100";
-  pianos[i].appendChild(text);
-}
+let chord_select = document.getElementById("chord-select");
+let symbol_select = document.getElementById("symbol-select");
+let key_select = document.getElementById("key-select");
+
+//順番デバッグ用
+// for(let i = 0; i < pianos.length; i++){
+//   let text = document.createElement("p");
+//   text.textContent = i;
+//   text.style.fontSize = "5px";
+//   text.style.position = "absolute";
+//   text.style.bottom = "25px";
+//   text.style.color = "red";
+//   text.style.zIndex = "100";
+//   pianos[i].appendChild(text);
+// }
+
+
+let pianos_data_now = {
+  piano_key: "C",
+  symbol: "n",
+  codeName: "(M)"
+};
+
+
+//書記
+contents_on_piano(root_start_get(pianos_data_now.piano_key, pianos_data_now.symbol), pianos_data_now.codeName);
+
+chord_select.addEventListener("change", function(event){
+  pianos_data_now.codeName = event.target.value;
+  
+  clearInterval(TimeIntervalEvent);
+  clearTimeout(TimeOutEvent);
+
+  reset_contents_on_piano();
+  contents_on_piano(root_start_get(pianos_data_now.piano_key, pianos_data_now.symbol), pianos_data_now.codeName);
+});
+key_select.addEventListener("change", function(event){
+  pianos_data_now.piano_key = event.target.value;
+
+  clearInterval(TimeIntervalEvent);
+  clearTimeout(TimeOutEvent);
+
+  reset_contents_on_piano();
+  contents_on_piano(root_start_get(pianos_data_now.piano_key, pianos_data_now.symbol), pianos_data_now.codeName);
+});
+symbol_select.addEventListener("change", function(event){
+  pianos_data_now.symbol = event.target.value;
+
+  clearInterval(TimeIntervalEvent);
+  clearTimeout(TimeOutEvent);
+
+  reset_contents_on_piano();
+  contents_on_piano(root_start_get(pianos_data_now.piano_key, pianos_data_now.symbol), pianos_data_now.codeName);
+});
+
+
 chord_play_button.addEventListener("click", function(event){
   let marked_piano = document.getElementsByClassName("mark_on_piano");
+  clearInterval(TimeIntervalEvent);
+  clearTimeout(TimeOutEvent);
   for(let i = 0; i < marked_piano.length; i++){
-    clickEvent(marked_piano[i].parentElement);
-    setTimeout(function(){UpEvent(marked_piano[i].parentElement)}, 1000);
+    if(marked_piano[i] != null){
+      clickEvent(marked_piano[i].parentElement);
+      setTimeout(function(){
+        UpEvent(marked_piano[i].parentElement);
+      }, 1000);
+    }
 
   }
+  let count = 0;
+
+  TimeOutEvent = setTimeout(function(){
+    TimeIntervalEvent = setInterval(function(){
+      console.log("-----------------");
+      if(count < marked_piano.length){
+        clickEvent(marked_piano[count].parentElement);
+        setTimeout(function(){
+          UpEvent(marked_piano[count - 1].parentElement);
+        }, 500);
+      }else{
+        clearInterval(TimeIntervalEvent);
+      }
+      count += 1;
+    }, (count + 1) * 1000);
+  }, 1000);
 });
 function root_start_get(key, symbol){
   return chord_root_start_data[key][symbol];
@@ -144,9 +217,10 @@ function root_start_get(key, symbol){
 function get_element_by_key(piano_key){
   return pianos[elements_by_piano[piano_key]];
 }
-contents_on_piano(root_start_get("G", "n"), "(M)");
 function contents_on_piano(root_start_key, _codeName){
+
   let get_element = get_element_by_key(root_start_key);
+  let event;
   //何番目の要素か
   let start_index = elements_by_piano[root_start_key];
   let piano_cords_keys = FindCodeTypeByCodeName(_codeName);
@@ -154,6 +228,17 @@ function contents_on_piano(root_start_key, _codeName){
   
   for(let i = 0; i < piano_cords_keys.codeKeys.length; i++){
     MarkOnPiano(pianos[(start_index + piano_cords_keys.codeKeys[i]) - 1]);
+  }
+
+
+}
+function reset_contents_on_piano(){
+  let mark_on_pianos = document.getElementsByClassName("mark_on_piano");
+  let length = mark_on_pianos.length;
+  
+  for(let i = 0; i < length; i++){
+    console.log(i);
+    mark_on_pianos[0].remove();
   }
 }
 

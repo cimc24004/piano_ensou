@@ -4,6 +4,38 @@
   <div class='piano-plugin-kuroonrails'>
       <button id='NoteButton'>音名を非表示</button>
       <button id="ChordsPlayButton">和音を再生</button>
+      <div class="chords-contents">
+        <select id="key-select">
+          <option value="C">C</option>
+          <option value="D">D</option>
+          <option value="E">E</option>
+          <option value="F">F</option>
+          <option value="G">G</option>
+          <option value="A">A</option>
+          <option value="B">B</option>
+          <!-- <option value="M(1)">マイナー</option> -->
+        </select>
+        <select id="symbol-select">
+          <option value="n">ナチュナル</option>
+          <option value="#">#</option>
+          <option value="b">b</option>
+        </select>
+        <select id="chord-select">
+          <option value="(M)">メジャー</option>
+          <option value="m">マイナー</option>
+          <option value="dim">ディミニッシュ</option>
+          <option value="aug">オーグメンテッド</option>
+          <option value="7">7</option>
+          <option value="m7">m7</option>
+          <option value="maj7">maj7</option>
+          <option value="m7(-5)">m7(b5)</option>
+          <!-- <option value="maj7">maj7</option> -->
+
+          <!-- <option value="M(1)">マイナー</option> -->
+        </select>
+
+      </div>
+
       <div class='pianos-box'>
         <div class='piano-box'>
           <button class='piano' id='C2'>
