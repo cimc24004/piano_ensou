@@ -35,7 +35,9 @@ let codeTypes = [
         'codeKeys': [1,5,8,10]},	
 
     {'codeName': 'm6',
-        'codeKeys': [1,4,8,10]},	
+        'codeKeys': [1,4,8,10]},
+    {'codeName': "7(#9)",
+        'codeKeys': [1,5,8,11,16]}
 ];
 
 let elements_by_piano = {
@@ -116,7 +118,7 @@ let chord_root_start_data = {
 }
 
 let pianos = document.getElementsByClassName("piano");
-
+let chord_play_button = document.getElementById("ChordsPlayButton");
 
 for(let i = 0; i < pianos.length; i++){
   let text = document.createElement("p");
@@ -128,14 +130,21 @@ for(let i = 0; i < pianos.length; i++){
   text.style.zIndex = "100";
   pianos[i].appendChild(text);
 }
+chord_play_button.addEventListener("click", function(event){
+  let marked_piano = document.getElementsByClassName("mark_on_piano");
+  for(let i = 0; i < marked_piano.length; i++){
+    clickEvent(marked_piano[i].parentElement);
+    setTimeout(function(){UpEvent(marked_piano[i].parentElement)}, 1000);
 
+  }
+});
 function root_start_get(key, symbol){
   return chord_root_start_data[key][symbol];
 }
 function get_element_by_key(piano_key){
   return pianos[elements_by_piano[piano_key]];
 }
-
+contents_on_piano(root_start_get("G", "n"), "(M)");
 function contents_on_piano(root_start_key, _codeName){
   let get_element = get_element_by_key(root_start_key);
   //何番目の要素か
